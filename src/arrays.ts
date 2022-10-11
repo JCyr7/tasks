@@ -27,7 +27,11 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    let newArray: number[] = numbers.map((num: string): number =>
+        parseInt(num)
+    );
+
+    return newArray.map((price: number): number => (isNaN(price) ? 0 : price));
 }
 
 /**
