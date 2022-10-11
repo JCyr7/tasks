@@ -7,11 +7,8 @@ function App(): JSX.Element {
         <div className="App">
             <h1>This is a header</h1>
             <header className="App-header">
-<<<<<<< HEAD
-                Jackson Cyr UM COS420 with React Hooks and TypeScript
-=======
-                UM COS420 with React Hooks and TypeScript
->>>>>>> upstream/task-functions
+                Jackson Cyr UM COS420 with React Hooks and TypeScript UM COS420
+                with React Hooks and TypeScriptg
             </header>
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
