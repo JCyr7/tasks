@@ -8,7 +8,8 @@ function App(): JSX.Element {
             <h1>This is a header</h1>
             <header className="App-header">
                 Jackson Cyr UM COS420 with React Hooks and TypeScript UM COS420
-                with React Hooks and TypeScript
+                with React Hooks and TypeScript UM COS420 with React Hooks and
+                TypeScript
             </header>
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
