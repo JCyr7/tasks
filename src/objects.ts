@@ -175,7 +175,7 @@ export function addOption(question: Question, newOption: string): Question {
         id: question.id,
         body: question.body,
         expected: question.expected,
-        options: question.options,
+        options: [...question.options],
         points: question.points,
         published: question.published,
         type: question.type
@@ -208,5 +208,7 @@ export function mergeQuestion(
         published: false,
         type: contentQuestion.type
     };
+    console.log(contentQuestion.options);
+    console.log(h.options);
     return h;
 }
