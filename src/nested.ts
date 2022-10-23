@@ -45,7 +45,7 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    return questions.filter((value: Question) => value.id !== id);
 }
 
 /***
@@ -53,21 +53,35 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
  * questions, as an array.
  */
 export function getNames(questions: Question[]): string[] {
-    return [];
+    const o = [];
+    for (let i = 0; i < questions.length; i++) {
+        o.push(questions[i].name);
+    }
+    return o;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    let o = 0;
+    for (let i = 0; i < questions.length; i++) {
+        o = o + questions[i].points;
+    }
+    return o;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
  */
 export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
+    let o = 0;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].published === true) {
+            o = o + questions[i].points;
+        }
+    }
+    return o;
 }
 
 /***
@@ -88,7 +102,19 @@ id,name,options,points,published
  * Check the unit tests for more examples!
  */
 export function toCSV(questions: Question[]): string {
-    return "";
+    let csv = "id,name,options,points,published";
+    let temp = "";
+    for (let i = 0; i < questions.length; i++) {
+        temp = "\n";
+        temp = temp + questions[i].id.toString() + ",";
+        temp = temp + questions[i].name + ",";
+        temp = temp + questions[i].options.length.toString() + ",";
+        temp = temp + questions[i].points.toString() + ",";
+        temp = temp + questions[i].published;
+        csv = csv + temp;
+    }
+    console.log(csv);
+    return csv;
 }
 
 /**
