@@ -1,5 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -113,7 +114,6 @@ export function toCSV(questions: Question[]): string {
         temp = temp + questions[i].published;
         csv = csv + temp;
     }
-    console.log(csv);
     return csv;
 }
 
@@ -123,7 +123,16 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    const o = [];
+    for (let i = 0; i < questions.length; i++) {
+        o.push({
+            questionId: questions[i].id,
+            text: "",
+            submitted: false,
+            correct: false
+        });
+    }
+    return o;
 }
 
 /***
@@ -131,7 +140,11 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    return [];
+    const copy = [...questions];
+    for (let i = 0; i < questions.length; i++) {
+        copy[i].published = true;
+    }
+    return copy;
 }
 
 /***
@@ -139,7 +152,18 @@ export function publishAll(questions: Question[]): Question[] {
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
 export function sameType(questions: Question[]): boolean {
-    return false;
+    const types = [];
+    if (questions.length === 0) {
+        return true;
+    }
+    types.push(questions[0].type);
+    for (let i = 1; i < questions.length; i++) {
+        if (types.includes(questions[i].type) === false) {
+            return false;
+        }
+        types.push(questions[i].type);
+    }
+    return true;
 }
 
 /***
@@ -153,7 +177,11 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    return [];
+    const copy = [...questions];
+    const l = makeBlankQuestion(id, name, type);
+    copy.push(l);
+    console.log(l);
+    return copy;
 }
 
 /***
