@@ -140,12 +140,7 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    const o = [];
-    for (let i = 0; i < questions.length; i++) {
-        const a = duplicateQuestion(questions[i].id, questions[i]);
-        a.name = questions[i].name;
-        o.push(a);
-    }
+    const o = questions.map((value: Question): Question => ({ ...value }));
     for (let i = 0; i < o.length; i++) {
         o[i].published = true;
     }
@@ -199,17 +194,9 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    const copy = [];
-    for (let i = 0; i < questions.length; i++) {
-        const a = duplicateQuestion(questions[i].id, questions[i]);
-        a.published = questions[i].published;
-        a.name = questions[i].name;
-        copy.push(a);
-    }
+    const copy = questions.map((value: Question): Question => ({ ...value }));
     for (let i = 0; i < copy.length; i++) {
         if (copy[i].id === targetId) {
-            console.log(targetId);
-            console.log(copy[i].id);
             copy[i].name = newName;
         }
     }
@@ -228,7 +215,16 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const copy = questions.map((value: Question): Question => ({ ...value }));
+    for (let i = 0; i < copy.length; i++) {
+        if (copy[i].id === targetId) {
+            if (copy[i].type === "multiple_choice_question") {
+                copy[i].options = [];
+            }
+            copy[i].type = newQuestionType;
+        }
+    }
+    return copy;
 }
 
 /**
@@ -247,7 +243,22 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    const copy = questions.map(
+        (value: Question): Question => ({
+            ...value,
+            options: [...value.options]
+        })
+    );
+    for (let i = 0; i < copy.length; i++) {
+        if (copy[i].id === targetId) {
+            if (targetOptionIndex === -1) {
+                copy[i].options.push(newOption);
+            } else {
+                copy[i].options[targetOptionIndex] = newOption;
+            }
+        }
+    }
+    return copy;
 }
 
 /***
@@ -261,5 +272,12 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const copy = questions.map((value: Question): Question => ({ ...value }));
+    for (let i = 0; i < copy.length; i++) {
+        if (copy[i].id === targetId) {
+            copy.splice(i + 1, 0, duplicateQuestion(newId, copy[i]));
+            break;
+        }
+    }
+    return copy;
 }
