@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -140,11 +140,16 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    const copy = [...questions];
+    const o = [];
     for (let i = 0; i < questions.length; i++) {
-        copy[i].published = true;
+        const a = duplicateQuestion(questions[i].id, questions[i]);
+        a.name = questions[i].name;
+        o.push(a);
     }
-    return copy;
+    for (let i = 0; i < o.length; i++) {
+        o[i].published = true;
+    }
+    return o;
 }
 
 /***
@@ -180,7 +185,7 @@ export function addNewQuestion(
     const copy = [...questions];
     const l = makeBlankQuestion(id, name, type);
     copy.push(l);
-    console.log(l);
+
     return copy;
 }
 
@@ -194,7 +199,21 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    const copy = [];
+    for (let i = 0; i < questions.length; i++) {
+        const a = duplicateQuestion(questions[i].id, questions[i]);
+        a.published = questions[i].published;
+        a.name = questions[i].name;
+        copy.push(a);
+    }
+    for (let i = 0; i < copy.length; i++) {
+        if (copy[i].id === targetId) {
+            console.log(targetId);
+            console.log(copy[i].id);
+            copy[i].name = newName;
+        }
+    }
+    return copy;
 }
 
 /***

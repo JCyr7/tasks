@@ -10,7 +10,16 @@ export function makeBlankQuestion(
     name: string,
     type: QuestionType
 ): Question {
-    return {};
+    return {
+        id: id,
+        name: name,
+        type: type,
+        body: "",
+        expected: "",
+        options: [],
+        points: 1,
+        published: false
+    };
 }
 
 /**
@@ -21,6 +30,11 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
+    answer = answer.trim();
+    answer = answer.toLowerCase();
+    if (answer === question.expected.toLowerCase()) {
+        return true;
+    }
     return false;
 }
 
@@ -31,6 +45,12 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
+    if (question.type === "short_answer_question") {
+        return true;
+    }
+    if (question.options.includes(answer)) {
+        return true;
+    }
     return false;
 }
 
@@ -41,7 +61,7 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    return question.id.toString() + ": " + question.name.substring(0, 10);
 }
 
 /**
@@ -62,7 +82,15 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    if (question.type === "multiple_choice_question") {
+        let st = "";
+        for (let i = 0; i < question.options.length; i++) {
+            st = st + "- " + question.options[i] + "\n";
+        }
+        const str = "# " + question.name + "\n" + question.body + "\n" + st;
+        return str.substring(0, str.length - 1);
+    }
+    return "# " + question.name + "\n" + question.body;
 }
 
 /**
@@ -70,7 +98,19 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const o: Question = {
+        name: question.name,
+        id: question.id,
+        body: question.body,
+        expected: question.expected,
+        options: question.options,
+        points: question.points,
+        published: question.published,
+        type: question.type
+    };
+
+    o.name = newName;
+    return o;
 }
 
 /**
@@ -79,7 +119,24 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const h: Question = {
+        name: question.name,
+        id: question.id,
+        body: question.body,
+        expected: question.expected,
+        options: question.options,
+        points: question.points,
+        published: question.published,
+        type: question.type
+    };
+
+    if (question.published === true) {
+        h.published = false;
+    } else {
+        h.published = true;
+    }
+
+    return h;
 }
 
 /**
@@ -89,7 +146,20 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const j: Question = {
+        name: oldQuestion.name,
+        id: oldQuestion.id,
+        body: oldQuestion.body,
+        expected: oldQuestion.expected,
+        options: oldQuestion.options,
+        points: oldQuestion.points,
+        published: oldQuestion.published,
+        type: oldQuestion.type
+    };
+    j.id = id;
+    j.published = false;
+    j.name = "Copy of " + j.name;
+    return j;
 }
 
 /**
@@ -100,7 +170,18 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const i: Question = {
+        name: question.name,
+        id: question.id,
+        body: question.body,
+        expected: question.expected,
+        options: [...question.options],
+        points: question.points,
+        published: question.published,
+        type: question.type
+    };
+    i.options.push(newOption);
+    return i;
 }
 
 /**
@@ -117,5 +198,15 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    const h: Question = {
+        name: name,
+        id: id,
+        body: contentQuestion.body,
+        expected: contentQuestion.expected,
+        options: contentQuestion.options,
+        points: points,
+        published: false,
+        type: contentQuestion.type
+    };
+    return h;
 }
