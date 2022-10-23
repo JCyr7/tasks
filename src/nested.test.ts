@@ -75,7 +75,8 @@ const NEW_TRIVIA_QUESTION = {
 describe("Testing the Question[] functions", () => {
     //////////////////////////////////
     // getPublishedQuestions
-
+    console.log("here");
+    console.log(SIMPLE_QUESTIONS);
     test("Testing the getPublishedQuestions function", () => {
         expect(getPublishedQuestions(BLANK_QUESTIONS)).toEqual([]);
         expect(getPublishedQuestions(SIMPLE_QUESTIONS)).toEqual([
