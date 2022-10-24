@@ -7,6 +7,7 @@ import { StartAttempt } from "./components/StartAttempt";
 import { TwoDice } from "./components/TwoDice";
 import { CycleHoliday } from "./components/CycleHoliday";
 import { Counter } from "./components/Counter";
+import { Dogcare } from "./components/dogcare_testing";
 
 function App(): JSX.Element {
     return (
@@ -69,6 +70,7 @@ function App(): JSX.Element {
             <ChangeType></ChangeType>
             <hr />
             <CycleHoliday></CycleHoliday>
+            <hr />
         </div>
     );
 }
