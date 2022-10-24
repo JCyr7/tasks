@@ -180,7 +180,6 @@ export function addNewQuestion(
     const copy = [...questions];
     const l = makeBlankQuestion(id, name, type);
     copy.push(l);
-
     return copy;
 }
 
