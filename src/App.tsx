@@ -7,13 +7,18 @@ import { StartAttempt } from "./components/StartAttempt";
 import { TwoDice } from "./components/TwoDice";
 import { CycleHoliday } from "./components/CycleHoliday";
 import { Counter } from "./components/Counter";
+import { DoubleHalf } from "./bad-components/DoubleHalf";
+import { ColoredBox } from "./bad-components/ColoredBox";
+import { ShoveBox } from "./bad-components/ShoveBox";
+import { ChooseTeam } from "./bad-components/ChooseTeam";
 
 function App(): JSX.Element {
     return (
         <div className="App">
             <h1>This is a header</h1>
             <header className="App-header">
-                Jackson Cyr UM COS420 with React Hooks and TypeScript
+                Jackson Cyr UM COS420 with React Hooks and TypeScript UM COS420
+                with React Hooks and TypeScript
             </header>
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
@@ -57,6 +62,14 @@ function App(): JSX.Element {
                     </Row>
                 </Container>
             </div>
+            <hr></hr>
+            {/* <DoubleHalf></DoubleHalf> */}
+            <hr></hr>
+            <ChooseTeam></ChooseTeam>
+            <hr></hr>
+            <ColoredBox></ColoredBox>
+            <hr></hr>
+            <ShoveBox></ShoveBox>
             <hr></hr>
             <Counter></Counter>
             <hr />
